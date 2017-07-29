@@ -9,7 +9,7 @@ fields.read('fields.conf')
 firm = configparser.ConfigParser()
 firm.read('firm.conf')
 
-def get_field(field, env):
+def get_field(field, env="TRAIN"):
     data = defaultdict(dict)
 
     headers = {'Authorization': firm["FIRM"]["Token"], 'Content-Type': 'application/xml'}
