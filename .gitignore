@@ -3,5 +3,8 @@
 .idea/vcs.xml
 .idea/misc.xml
 .idea/modules.xml
+.idea/inspectionProfiles
 
 firm.conf
+.idea/.name
+.idea/LucernexAPI.iml
