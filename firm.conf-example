@@ -1,0 +1,5 @@
+[FIRM]
+PROD = https://firm.lucernex.com
+TRAIN = https://train-firm.lucernex.com
+User = ADDUSERNAME
+Token = Basic Encoded String
