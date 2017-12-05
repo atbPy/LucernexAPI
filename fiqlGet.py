@@ -25,13 +25,13 @@ def get_field(field, env="TRAIN", fiql=""):
         key = child.attrib.get('lxID')
         for grandchild in child:
             # if a tag ends in ID then it is a foreign key and might have an LxID
-            # if it has an LxID then we want that instead of the text
+            # if it has an LxID then we want both items stored in a dict
             if grandchild.attrib.get('lxID') is not None:
-                data[key][grandchild.tag] = grandchild.attrib.get('lxID')
+                data[key][grandchild.tag] = {'RecID': grandchild.attrib.get('lxID'), 'Name': grandchild.text}
             else:
                 data[key][grandchild.tag] = grandchild.text
 
     return data
 
-contract = get_field("Contract", "TRAIN")
-print(contract)
+def get_radius_unit(env="TRAIN"):
+    return get_field("CustomCodeField", env, "CustomCodeTableID==Radius Unit")
