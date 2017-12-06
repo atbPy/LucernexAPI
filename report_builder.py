@@ -2,6 +2,15 @@ import os
 from openpyxl import Workbook
 from openpyxl import load_workbook
 from collections import defaultdict
+import configparser
+
+# Create the full path to the Templates folder
+
+dir = os.path.dirname(__file__)
+templates_folder = os.path.join(dir, 'Templates')
+
+reports = configparser.ConfigParser()
+reports.read('reports.conf')
 
 data = defaultdict(dict)
 
@@ -14,20 +23,24 @@ field = "CustomCodeField"
 file = "C:/Users/abednar/PycharmProjects/LucernexAPI/Templates/RadiusUnit.xlsx"
 
 
-def build_field_dict_from_template(file, field):
+def build_field_dict_from_template(report):
+    api_field = reports[report]["field"]
+    file = os.path.join(templates_folder, reports[report]["template"])
+
     wb = load_workbook(filename=file)
-    ws = wb.get_sheet_by_name(field)
+    ws = wb.get_sheet_by_name(api_field)
     columns = ws.max_column
 
     field_dict = {}
+
+    # Fields start in column 5, start with 4 since each loop increments
     index_number = 4
 
-    row_two = ws[2]
+
+    # iterate through each column and grab anything after the first period
     for column in ws.iter_cols(min_row=2, min_col=5, max_col=columns, max_row=2):
         index_number += 1
-        print(column)
         for cell in column:
-            print(cell.value)
             field_to_split = cell.value
             field = field_to_split.split(".")
             field_dict[index_number] = field[1]
@@ -40,7 +53,7 @@ def write_to_excel(data, field, file):
     wb = load_workbook(filename=file)
     ws = wb.get_sheet_by_name(field)
 
-    fields_dict = build_field_dict_from_template(file, "CustomCodeField")
+    fields_dict = build_field_dict_from_template("RadiusUnit")
 
     for item in data:
         row_number += 1
@@ -65,5 +78,5 @@ def write_to_excel(data, field, file):
     wb.save("C:/Users/abednar/PycharmProjects/LucernexAPI/Templates/RadiusUnit-test.xlsx")
 
 
-# build_field_dict_from_template(file, "CustomCodeField")
-a = write_to_excel(data, "CustomCodeField", file)
+build_field_dict_from_template("RadiusUnit")
+# a = write_to_excel(data, "CustomCodeField", file)
