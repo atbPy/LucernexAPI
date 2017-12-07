@@ -10,12 +10,12 @@ firm = configparser.ConfigParser()
 firm.read('firm.conf')
 
 
-def fiql_get(field, env="TRAIN", fiql=""):
+def fiql_get(table, firm_name="Default", environment="TRAIN", fiql=""):
     data = defaultdict(dict)
 
-    headers = {'Authorization': firm["FIRM"]["Token"], 'Content-Type': 'application/xml'}
-    params = {'fiql': fiql, 'fields': fields[field]["Fields"]}
-    url = "{}/rest/businessObject/{}/details".format(firm["FIRM"][env], field)
+    headers = {'Authorization': firm[firm_name]["Token"], 'Content-Type': 'application/xml'}
+    params = {'fiql': fiql, 'fields': fields[table]["Fields"]}
+    url = "{}/rest/businessObject/{}/details".format(firm[firm_name][environment], table)
 
     response = requests.get(url, params=params, headers=headers)
 
@@ -34,12 +34,12 @@ def fiql_get(field, env="TRAIN", fiql=""):
     return data
 
 
-def lxid_get(field, env="TRAIN", lxid):
+def lxid_get(table, lxid, firm_name="Default", environment="TRAIN"):
     data = defaultdict(dict)
 
-    headers = {'Authorization': firm["FIRM"]["Token"], 'Content-Type': 'application/xml'}
+    headers = {'Authorization': firm[firm_name]["Token"], 'Content-Type': 'application/xml'}
     params = {'deep': 'true', 'wantClientID': 'true', 'wantLxID': 'true'}
-    url = "{}/rest/businessObject/{}/lxid/{}".format(firm["FIRM"][env], field, lxid)
+    url = "{}/rest/businessObject/{}/lxid/{}".format(firm[firm_name][environment], table, lxid)
 
     response = requests.get(url, params=params, headers=headers)
 

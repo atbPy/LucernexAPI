@@ -1,5 +1,5 @@
-[FIRM]
-PROD = firm.lucernex.com
-TRAIN = train-firm.lucernex.com
+[Default]
+PROD = https://lxretail.lucernex.com
+TRAIN = https://train.lucernex.com
 User = ADDUSERNAME
 Token = Basic Encoded String
