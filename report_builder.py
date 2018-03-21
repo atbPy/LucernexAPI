@@ -69,7 +69,7 @@ def write_to_excel(data, report, name=None):
             field_name = fields_dict[field]
             try:
                 if isinstance(data[item][field_name], dict):
-                    text_value = data[item][field_name]['Name']
+                    text_value = data[item][field_name]['RecID']
                 else:
                     text_value = data[item][field_name]
             except KeyError:

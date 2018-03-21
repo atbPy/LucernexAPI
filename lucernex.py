@@ -19,6 +19,8 @@ def fiql_get(table, firm_name="Default", environment="TRAIN", fiql=""):
 
     response = requests.get(url, params=params, headers=headers)
 
+    print(response.status_code)
+
     root = etree.fromstring(response.content)
 
     for child in root:
